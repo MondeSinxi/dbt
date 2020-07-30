@@ -158,6 +158,7 @@ class RunTask(CompileTask):
             r.node.schema for r in results
             if not any((r.error is not None, r.failed, r.skipped))
         ))
+        adapter.cleanup_connections()
         with adapter.connection_named('master'):
             self.safe_run_hooks(adapter, RunHookType.End,
                                 {'schemas': schemas, 'results': results})
